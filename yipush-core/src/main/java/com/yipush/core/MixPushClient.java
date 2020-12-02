@@ -68,9 +68,6 @@ public class MixPushClient {
         register(context, defaultPlatform, null);
     }
 
-    public void  register(){
-
-    }
     /**
      * @param defaultPlatform 默认的推送平台
      */
