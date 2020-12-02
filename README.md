@@ -26,4 +26,5 @@ allprojects {
     }
 }
 
+
 2.implementation 'com.github.workgithub123:YiPush:tag'//tag改成版本号
