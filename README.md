@@ -1,6 +1,6 @@
 # YiPush
 1.0.0
-基于MixPush(https://github.com/taoweiji/MixPush)  网络后台配置各大厂商渠道\n
+基于MixPush(https://github.com/taoweiji/MixPush)  网络后台配置各大厂商渠道
 1.根 gradle ：
 buildscript {
     repositories {
