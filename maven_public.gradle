@@ -1,0 +1,6 @@
+group = "com.github.yipush"
+version = "1.0.0"
+
+apply plugin: 'maven'
+
+

@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+}
+apply plugin: 'com.huawei.agconnect'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.ly.yipush"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        manifestPlaceholders["MI_APP_ID"] = "2882303761518854336"
+        manifestPlaceholders["MI_APP_KEY"] = "5411885491336"
+        manifestPlaceholders["VIVO_APP_ID"] = "<VIVO_APP_ID>"
+        manifestPlaceholders["VIVO_APP_KEY"] = "<VIVO_APP_KEY>"
+        manifestPlaceholders["OPPO_APP_KEY"] = "<OPPO_APP_KEY>"
+        manifestPlaceholders["OPPO_APP_SECRET"] = "<OPPO_APP_SECRET>"
+        manifestPlaceholders["MEIZU_APP_ID"] = "<MEIZU_APP_ID>"
+        manifestPlaceholders["MEIZU_APP_KEY"] = "<MEIZU_APP_KEY>"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation project(path: ':yipush-core')
+    implementation project(path: ':yipush-oppo')
+    implementation project(path: ':yipush-meizu')
+    implementation project(path: ':yipush-vivo')
+    implementation project(path: ':yipush-huawei')
+    implementation project(path: ':yipush-mi')
+}

@@ -1,0 +1,9 @@
+include ':app'
+rootProject.name = "YiPush"
+include ':yipush-mi'
+include ':yipush-meizu'
+include ':yipush-oppo'
+include ':yipush-vivo'
+include ':yipush-huawei'
+include ':yipush-core'
+
