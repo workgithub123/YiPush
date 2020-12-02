@@ -6,25 +6,43 @@
 1.根 gradle ：
 
 buildscript {
+
     repositories {
+    
         google()
+        
         jcenter()
+        
         //加入下面两行
+        
         maven { url "https://jitpack.io" }
-        maven { url 'http://developer.huawei.com/repo/' }
+        
+        maven { url 'http://developer.huawei.com/repo/'
+        }
     }
+    
     dependencies {
+    
         //加入下面
+        
         classpath 'com.huawei.agconnect:agcp:1.3.1.300'
+        
     }
 }
 
+
 allprojects {
+
     repositories {
+    
         google()
+        
         jcenter()
+        
         //加入下面两行
+        
         maven { url "https://jitpack.io" }
+        
         maven { url 'http://developer.huawei.com/repo/' }
     }
 }
