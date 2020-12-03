@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.ly.yipush.thread.ThreadPool;
+import com.yipush.core.utils.YiPushManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        YiPushManager.getRegisterId(MyApplication.getInstance());
+        YiPushManager.regist(MyApplication.getInstance(),"","");
 
     }
 }

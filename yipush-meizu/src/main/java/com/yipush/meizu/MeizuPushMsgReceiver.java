@@ -19,7 +19,7 @@ import com.yipush.core.MixPushMessage;
 
 
 /**
- * Created by liaojinlong on 15-6-28.
+ * Created by  on 15-6-28.
  */
 public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
 
