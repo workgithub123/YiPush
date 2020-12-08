@@ -93,8 +93,6 @@ apply plugin: 'com.huawei.agconnect'
  
  混淆配置
  
-# MixPush
-
 -keep class com.mixpush.mi.MiPushProvider {*;}
 
 -keep class com.mixpush.meizu.MeizuPushProvider {*;}
