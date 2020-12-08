@@ -85,10 +85,22 @@ apply plugin: 'com.huawei.agconnect'
 
 实例化例子：
 
+//日子打印
+
  YiPushManager.setDEBUG(true);
  
+ //实例化
  YiPushManager.init(this,appkey,appscrent, new YIPushReceiver(),new YiPushPassThroughReceiver());
  
+ //推送注册（实例化里已经调用，可用手动重新调用）
+ YiPushManager.regist
+ 
+ //设备注销
+ YiPushManager.unregisterDevice
+ 
+ 
+ //设备保活（建议每次启动APP调用）
+ YiPushManager.imActive
  
  
  混淆配置
