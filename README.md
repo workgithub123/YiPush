@@ -106,7 +106,7 @@ apply plugin: 'com.huawei.agconnect'
 -keep class com.mixpush.vivo.VivoPushProvider {*;}
 
  
-# 华为推送
+#华为推送
 
 -keep class com.hianalytics.android.**{*;} 
 
@@ -114,19 +114,19 @@ apply plugin: 'com.huawei.agconnect'
 
 -keep class com.huawei.hms.**{*;}
 
-# 小米推送
+#小米推送
 
 -keep class com.xiaomi.**{*;}
 
 
-# OPPO
+#OPPO
 
 -keep public class * extends android.app.Service
 
 -keep class com.heytap.msp.** { *;}
 
 
-# VIVO
+#VIVO
 
 -dontwarn com.vivo.push.** 
 
@@ -134,7 +134,7 @@ apply plugin: 'com.huawei.agconnect'
 
 -keep class com.vivo.vms.**{*; }
 
-# 魅族
+#魅族
 
 -keep class com.meizu.**{*;}
 
