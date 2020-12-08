@@ -9,7 +9,6 @@ import com.yanzhenjie.nohttp.cookie.DBCookieStore;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.SimpleResponseListener;
-import com.yipush.core.utils.YiPushManager;
 
 /**
  * Created by lymac on 17/8/29.

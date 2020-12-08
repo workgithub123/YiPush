@@ -1,12 +1,8 @@
 package com.ly.yipush;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.yipush.core.MixPushMessage;
-import com.yipush.core.MixPushPassThroughReceiver;
-import com.yipush.core.MixPushPlatform;
-import com.yipush.core.utils.YiPushManager;
+import com.yipush.core.net.YiPushManager;
 
 /**
  * Created by ly on 11/30/20.

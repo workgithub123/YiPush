@@ -1,4 +1,4 @@
-package com.yipush.core.utils;
+package com.yipush.core.net;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,9 +11,7 @@ import com.yipush.core.MixPushClient;
 import com.yipush.core.MixPushPassThroughReceiver;
 import com.yipush.core.MixPushPlatform;
 import com.yipush.core.MixPushReceiver;
-import com.yipush.core.net.Logg;
-import com.yipush.core.net.NoHttpHelper;
-import com.yipush.core.net.Presenter;
+import com.yipush.core.utils.MyShared;
 
 /**
  * Created by ly on 11/30/20.
@@ -63,8 +61,8 @@ public class YiPushManager {
         MixPushClient.getInstance().setPushReceiver(mixPushReceiver);
         MixPushClient.getInstance().setPassThroughReceiver(mixPushPassThroughReceiver);
         MixPushClient.getInstance().register(application);
-        regist(application);
         getNoHttpHelper(application);
+        regist(application);
     }
 
     public static synchronized NoHttpHelper getNoHttpHelper(Context context) {

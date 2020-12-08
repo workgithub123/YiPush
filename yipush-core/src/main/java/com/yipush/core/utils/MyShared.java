@@ -1,8 +1,9 @@
 package com.yipush.core.utils;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.yipush.core.net.YiPushManager;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;

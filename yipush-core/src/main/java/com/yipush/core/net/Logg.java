@@ -3,8 +3,6 @@ package com.yipush.core.net;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.yipush.core.utils.YiPushManager;
-
 /**
  * Created by ly on 12/7/20.
  * Describe:LY
