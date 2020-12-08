@@ -1,5 +1,6 @@
-# YiPush
+
 公司自用
+
 1.根 gradle ：
 
 buildscript {
