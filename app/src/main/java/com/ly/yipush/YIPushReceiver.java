@@ -17,8 +17,6 @@ public class YIPushReceiver extends MixPushReceiver {
      */
     @Override
     public void onRegisterSucceed(Context context, MixPushPlatform mixPushPlatform) {
-        // 这里需要实现上传regId和推送平台信息到服务端保存，
-        //也可以通过MixPushClient.getInstance().getRegisterId的方式实现
 
     }
     /**

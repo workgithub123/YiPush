@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,9 +32,9 @@ public class HttpsClient {
     private String respEncode = "UTF-8";
 
 
-    public static synchronized HttpsClient getInstance(){
-        return instance==null?new HttpsClient():instance;
-    }
+//    public static synchronized HttpsClient getInstance(){
+//        return instance==null?new HttpsClient():instance;
+//    }
     public HttpsClient(){
         String trustStore = System.getProperty("javax.net.ssl.trustStore");
 
@@ -51,12 +52,13 @@ public class HttpsClient {
 
         //初始化请求参数
         reqProperty = new HashMap<String, String>();
-        reqProperty.put("Content-Type", "text/xml");
+        reqProperty.put("Content-Type", "application/json");
 
     }
     //设置请求参数
-    public void setRequestProperty(Map<String, String> reqProperty) {
+    public HttpsClient setRequestProperty(Map<String, String> reqProperty) {
         this.reqProperty.putAll(reqProperty);
+        return this;
     }
 
     public String doGet(String urlstr) throws IOException {
@@ -88,7 +90,7 @@ public class HttpsClient {
 
     public String doPost(String urlstr,byte data[]) throws IOException {
         URL url = new URL(urlstr);
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         fetchReqMap(connection);
         connection.setReadTimeout(timeout);
         connection.setDoOutput(true); // true for POST, false for GET
@@ -145,7 +147,7 @@ public class HttpsClient {
         return doPost(urlstr, data);
     }
 
-    private void fetchReqMap(HttpsURLConnection connection){
+    private void fetchReqMap(HttpURLConnection connection){
         Iterator<String> iterator = this.reqProperty.keySet().iterator();
         while(iterator.hasNext()){
             String key = iterator.next();

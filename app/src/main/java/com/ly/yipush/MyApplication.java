@@ -1,7 +1,11 @@
 package com.ly.yipush;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.yipush.core.MixPushMessage;
+import com.yipush.core.MixPushPassThroughReceiver;
+import com.yipush.core.MixPushPlatform;
 import com.yipush.core.utils.YiPushManager;
 
 /**
@@ -21,6 +25,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instante = this;
-        YiPushManager.init(this,new YIPushReceiver());
+        YiPushManager.setDEBUG(true);
+        YiPushManager.init(this,"0823a2d92fef421db7559c2907089232","5811426b33e84439b07a30a2dbec4418"
+                , new YIPushReceiver(),new YiPushPassThroughReceiver());
     }
 }

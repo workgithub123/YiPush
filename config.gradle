@@ -1,0 +1,9 @@
+ext{
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    compileSdkVersion = 29
+    buildToolsVersion = "29.0.3"
+    supportLibVersion = "29.0.3"
+    javaVersion = JavaVersion.VERSION_1_8
+    versionName = "1.0.0"
+}

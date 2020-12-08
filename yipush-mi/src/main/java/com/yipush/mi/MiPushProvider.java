@@ -2,11 +2,11 @@ package com.yipush.mi;
 
 import android.content.Context;
 
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.yipush.core.BaseMixPushProvider;
 import com.yipush.core.RegisterType;
 import com.yipush.core.MixPushClient;
 import com.yipush.core.MixPushHandler;
-import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
