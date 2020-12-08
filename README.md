@@ -1,7 +1,7 @@
 # YiPush
 1.0.0
-
-基于MixPush(https://github.com/taoweiji/MixPush)  网络后台配置各大厂商渠道
+公司自用
+基于MixPush(https://github.com/taoweiji/MixPush)  网络后台配置各大厂商渠道推送  
 
 1.根 gradle ：
 
@@ -47,6 +47,13 @@ allprojects {
     }
 }
 
+2. module 下 gradle
+implementation 'com.github.workgithub123:YiPush:tag'//tag改成版本号
 
-2.implementation 'com.github.workgithub123:YiPush:tag'//tag改成版本号
+
+实例化例子：
+ YiPushManager.setDEBUG(true);
+ YiPushManager.init(this,appkey,appscrent, new YIPushReceiver(),new YiPushPassThroughReceiver());
+ 
+ 
 
