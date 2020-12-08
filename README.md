@@ -1,8 +1,5 @@
 # YiPush
-1.0.0
 公司自用
-基于MixPush 网络后台配置各大厂商渠道推送  
-
 1.根 gradle ：
 
 buildscript {
