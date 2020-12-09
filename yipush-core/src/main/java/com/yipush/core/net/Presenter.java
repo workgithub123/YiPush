@@ -18,10 +18,10 @@ public class Presenter {
     private static final String imActive = "v1/frontend/appsdk/imActive";
     private static final String unregisterDevice = "v1/frontend/appsdk/unregisterDevice";
 
-     static void registerDevice(String regId) throws Exception {
+     static void registerDevice(String regId,String platform) throws Exception {
         Map<String, String> map = new ArrayMap<>();
         map.put("regId", regId);
-        map.put("platform", "android");
+        map.put("platform", platform);
         map.put("nonceStr", SignUtil.generateNonceStr());
         String jsonReq = SignUtil.generateSignedJson(map, YiPushManager.APP_SECRET);
         NohttpRequest.urlPost(1, BASE_URL + registerDevice, jsonReq, false, ""

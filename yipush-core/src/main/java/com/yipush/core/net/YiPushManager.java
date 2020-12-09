@@ -27,6 +27,7 @@ public class YiPushManager {
     public static Context content;
 
     private static String TAG = "YiPushManager";
+    private static String regId;
 
     public static boolean isDEBUG() {
         return DEBUG;
@@ -42,6 +43,12 @@ public class YiPushManager {
         Logger.setDebug(YiPushManager.DEBUG);
     }
 
+    public static String getRegId(){
+        if (isDEBUG()){
+            return regId;
+        }
+        return "debug mode required";
+    }
     /**
      * 初始化
      * 放在Application 里
@@ -83,7 +90,9 @@ public class YiPushManager {
             public void callback(YiPushPlatform platform) {
                 if (platform != null) {
                     try {
-                        net(platform.getRegId());
+                        regId=platform.getRegId();
+                        Logg.e(TAG,"RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
+                        net(platform.getRegId(),platform.getPlatformName());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -111,8 +120,8 @@ public class YiPushManager {
     }
 
 
-    private static void net(String rgid) throws Exception {
-        Presenter.registerDevice(rgid);
+    private static void net(String rgid,String platform) throws Exception {
+        Presenter.registerDevice(rgid,platform);
     }
 
 

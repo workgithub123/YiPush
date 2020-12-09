@@ -17,7 +17,7 @@ import com.yanzhenjie.nohttp.rest.SimpleResponseListener;
 public class NoHttpHelper {
     private final int MY_SOCKET_TIMEOUT_MS = 30 * 1000;
     Context context;
-    public static final String NoHttp_TAG = "NoHttp_TAG";
+    public static final String NoHttp_TAG = "YiPush_net";
     private RequestQueue queue;
 
 

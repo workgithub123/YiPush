@@ -11,16 +11,16 @@ android {
         applicationId "com.ly.yipush"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
         manifestPlaceholders["MI_APP_ID"] = "2882303761518854336"
         manifestPlaceholders["MI_APP_KEY"] = "5411885491336"
-        manifestPlaceholders["VIVO_APP_ID"] = "<VIVO_APP_ID>"
-        manifestPlaceholders["VIVO_APP_KEY"] = "<VIVO_APP_KEY>"
+        manifestPlaceholders["VIVO_APP_ID"] = "105309369"
+        manifestPlaceholders["VIVO_APP_KEY"] = "c86e7acc1bc4297bf4c596369fdbfdcc"
         manifestPlaceholders["OPPO_APP_KEY"] = "<OPPO_APP_KEY>"
         manifestPlaceholders["OPPO_APP_SECRET"] = "<OPPO_APP_SECRET>"
         manifestPlaceholders["MEIZU_APP_ID"] = "<MEIZU_APP_ID>"
