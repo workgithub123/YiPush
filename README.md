@@ -103,15 +103,15 @@ apply plugin: 'com.huawei.agconnect'
  
  混淆配置
  
--keep class com.mixpush.mi.MiPushProvider {*;}
+-keep class com.yipush.mi.MiPushProvider {*;}
 
--keep class com.mixpush.meizu.MeizuPushProvider {*;}
+-keep class com.yipush.meizu.MeizuPushProvider {*;}
 
--keep class com.mixpush.huawei.HuaweiPushProvider {*;}
+-keep class com.yipush.huawei.HuaweiPushProvider {*;}
 
--keep class com.mixpush.oppo.OppoPushProvider {*;}
+-keep class com.yipush.oppo.OppoPushProvider {*;}
 
--keep class com.mixpush.vivo.VivoPushProvider {*;}
+-keep class com.yipush.vivo.VivoPushProvider {*;}
 
  
 #华为推送
