@@ -5,10 +5,10 @@ import android.os.Build;
 
 import com.meizu.cloud.pushsdk.PushManager;
 import com.meizu.cloud.pushsdk.util.MzSystemUtils;
-import com.yipush.core.BaseMixPushProvider;
+import com.yipush.core.BaseYiPushProvider;
 import com.yipush.core.RegisterType;
 
-public class MeizuPushProvider extends BaseMixPushProvider {
+public class MeizuPushProvider extends BaseYiPushProvider {
     public static final String MEIZU = "meizu";
     private String appId;
     private String appKey;

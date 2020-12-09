@@ -2,29 +2,29 @@ package com.yipush.huawei;
 
 import com.huawei.hms.push.HmsMessageService;
 import com.huawei.hms.push.RemoteMessage;
-import com.yipush.core.MixPushPlatform;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
-import com.yipush.core.MixPushMessage;
+import com.yipush.core.YiPushPlatform;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
+import com.yipush.core.YiPushMessage;
 
 public class UnifiedHmsMessageService extends HmsMessageService {
     public static final String TAG = "HuaweiPushProvider";
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 
     /**
      * 接收透传消息方法。
      */
     @Override
     public void onMessageReceived(RemoteMessage message) {
-        MixPushMessage mixPushMessage = new MixPushMessage();
-        mixPushMessage.setPlatform(HuaweiPushProvider.HUAWEI);
+        YiPushMessage yiPushMessage = new YiPushMessage();
+        yiPushMessage.setPlatform(HuaweiPushProvider.HUAWEI);
         if (message.getNotification() != null) {
-            mixPushMessage.setTitle(message.getNotification().getTitle());
-            mixPushMessage.setDescription(message.getNotification().getBody());
+            yiPushMessage.setTitle(message.getNotification().getTitle());
+            yiPushMessage.setDescription(message.getNotification().getBody());
         }
-        mixPushMessage.setPayload(message.getData());
-        mixPushMessage.setPassThrough(message.getNotification() == null);
-        handler.getPassThroughReceiver().onReceiveMessage(this, mixPushMessage);
+        yiPushMessage.setPayload(message.getData());
+        yiPushMessage.setPassThrough(message.getNotification() == null);
+        handler.getPassThroughReceiver().onReceiveMessage(this, yiPushMessage);
     }
 
     /**
@@ -36,8 +36,8 @@ public class UnifiedHmsMessageService extends HmsMessageService {
      */
     @Override
     public void onNewToken(String token) {
-        MixPushPlatform mixPushPlatform = new MixPushPlatform(HuaweiPushProvider.HUAWEI, token);
-        handler.getPushReceiver().onRegisterSucceed(this, mixPushPlatform);
+        YiPushPlatform yiPushPlatform = new YiPushPlatform(HuaweiPushProvider.HUAWEI, token);
+        handler.getPushReceiver().onRegisterSucceed(this, yiPushPlatform);
     }
 
     /**

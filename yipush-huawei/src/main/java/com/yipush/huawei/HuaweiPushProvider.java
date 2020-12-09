@@ -8,21 +8,21 @@ import android.util.Log;
 import com.huawei.agconnect.config.AGConnectServicesConfig;
 import com.huawei.hms.aaid.HmsInstanceId;
 import com.huawei.hms.common.ApiException;
-import com.yipush.core.BaseMixPushProvider;
-import com.yipush.core.MixPushPlatform;
+import com.yipush.core.BaseYiPushProvider;
+import com.yipush.core.YiPushPlatform;
 import com.yipush.core.RegisterType;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
 
 import java.lang.reflect.Method;
 
 import static com.yipush.huawei.UnifiedHmsMessageService.TAG;
 
-public class HuaweiPushProvider extends BaseMixPushProvider {
+public class HuaweiPushProvider extends BaseYiPushProvider {
     public static final String HUAWEI = "huawei";
     public static String regId;
 
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 
 
     @Override
@@ -90,8 +90,8 @@ public class HuaweiPushProvider extends BaseMixPushProvider {
             public void run() {
                 String regId = getRegisterId(context);
                 if (!TextUtils.isEmpty(regId)) {
-                    MixPushPlatform mixPushPlatform = new MixPushPlatform(HuaweiPushProvider.HUAWEI, regId);
-                    MixPushClient.getInstance().getHandler().getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+                    YiPushPlatform yiPushPlatform = new YiPushPlatform(HuaweiPushProvider.HUAWEI, regId);
+                    YiPushClient.getInstance().getHandler().getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
                 }
             }
         }.start();

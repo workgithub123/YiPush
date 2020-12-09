@@ -9,35 +9,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class MixPushClient {
+public class YiPushClient {
     public static String TAG = "UnifiedPush";
     public static final String MI = "mi";
     public static boolean debug = true;
 
-    protected Map<String, BaseMixPushProvider> pushManagerMap = new HashMap<>();
+    protected Map<String, BaseYiPushProvider> pushManagerMap = new HashMap<>();
 
-    protected static volatile MixPushClient mixPushClient;
-    protected MixPushHandler handler = new MixPushHandler();
-    protected BaseMixPushProvider notificationPushProvider;
-    protected BaseMixPushProvider passThroughPushProvider;
+    protected static volatile YiPushClient yiPushClient;
+    protected YiPushHandler handler = new YiPushHandler();
+    protected BaseYiPushProvider notificationPushProvider;
+    protected BaseYiPushProvider passThroughPushProvider;
 
 
-    public static MixPushClient getInstance() {
-        if (mixPushClient == null) {
-            synchronized (MixPushClient.class) {
-                if (mixPushClient == null) {
-                    mixPushClient = new MixPushClient();
+    public static YiPushClient getInstance() {
+        if (yiPushClient == null) {
+            synchronized (YiPushClient.class) {
+                if (yiPushClient == null) {
+                    yiPushClient = new YiPushClient();
                 }
             }
         }
-        return mixPushClient;
+        return yiPushClient;
     }
 
-    public MixPushClient() {
+    public YiPushClient() {
 
     }
 
-    public void addPlatformProvider(BaseMixPushProvider provider) {
+    public void addPlatformProvider(BaseYiPushProvider provider) {
         String platformName = provider.getPlatformName();
         if (pushManagerMap.containsKey(platformName)) {
             return;
@@ -48,7 +48,7 @@ public class MixPushClient {
     protected void addPlatformProviderByClassName(String className) {
         try {
             Class<?> pushManager = Class.forName(className);
-            addPlatformProvider((BaseMixPushProvider) pushManager.newInstance());
+            addPlatformProvider((BaseYiPushProvider) pushManager.newInstance());
         } catch (Exception e) {
             handler.getLogger().log(TAG, "addPlatformProviderByClassName", e);
         }
@@ -82,19 +82,19 @@ public class MixPushClient {
         addPlatformProviderByClassName("com.yipush.oppo.OppoPushProvider");
         addPlatformProviderByClassName("com.yipush.vivo.VivoPushProvider");
 
-        BaseMixPushProvider pushProvider = null;
+        BaseYiPushProvider pushProvider = null;
         // 获取厂商推送
         Set<String> keys = pushManagerMap.keySet();
         for (String key : keys) {
             // 除开默认的推送
             if (!key.equals(defaultPlatform)) {
-                BaseMixPushProvider tmp = pushManagerMap.get(key);
+                BaseYiPushProvider tmp = pushManagerMap.get(key);
                 if (tmp != null && tmp.isSupport(context)) {
                     pushProvider = tmp;
                 }
             }
         }
-        BaseMixPushProvider defaultProvider = pushManagerMap.get(defaultPlatform);
+        BaseYiPushProvider defaultProvider = pushManagerMap.get(defaultPlatform);
         if (defaultProvider == null) {
             handler.getLogger().log(TAG, "no support push sdk", new Exception("no support push sdk"));
             return;
@@ -121,19 +121,19 @@ public class MixPushClient {
         }
     }
 
-    public void setLogger(MixPushLogger logger) {
+    public void setLogger(YiPushLogger logger) {
         handler.callLogger = logger;
     }
 
-    public void setPushReceiver(MixPushReceiver receiver) {
+    public void setPushReceiver(YiPushReceiver receiver) {
         handler.callPushReceiver = receiver;
     }
 
-    public void setPassThroughReceiver(MixPushPassThroughReceiver receiver) {
+    public void setPassThroughReceiver(YiPushPassThroughReceiver receiver) {
         handler.callPassThroughReceiver = receiver;
     }
 
-    public MixPushHandler getHandler() {
+    public YiPushHandler getHandler() {
         return handler;
     }
 
@@ -149,7 +149,7 @@ public class MixPushClient {
      */
     public void getRegisterId(Context context, final GetRegisterIdCallback callback, boolean isPassThrough) {
         final Context appContext = context.getApplicationContext();
-        final BaseMixPushProvider pushProvider;
+        final BaseYiPushProvider pushProvider;
         if (isPassThrough) {
             pushProvider = passThroughPushProvider;
         } else {
@@ -163,7 +163,7 @@ public class MixPushClient {
                     while (true) {
                         String regId = pushProvider.getRegisterId(appContext);
                         if (regId != null && !regId.isEmpty()) {
-                            callback.callback(new MixPushPlatform(pushProvider.getPlatformName(), regId));
+                            callback.callback(new YiPushPlatform(pushProvider.getPlatformName(), regId));
                             break;
                         }
                         checkCount++;

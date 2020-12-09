@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class MixPushMessage implements Serializable, Parcelable {
+public class YiPushMessage implements Serializable, Parcelable {
     /**
      * 通知栏标题,透传该字段为空
      */
@@ -103,10 +103,10 @@ public class MixPushMessage implements Serializable, Parcelable {
         dest.writeByte(this.passThrough ? (byte) 1 : (byte) 0);
     }
 
-    public MixPushMessage() {
+    public YiPushMessage() {
     }
 
-    protected MixPushMessage(Parcel in) {
+    protected YiPushMessage(Parcel in) {
         this.title = in.readString();
         this.description = in.readString();
         this.platform = in.readString();
@@ -114,15 +114,15 @@ public class MixPushMessage implements Serializable, Parcelable {
         this.passThrough = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<MixPushMessage> CREATOR = new Parcelable.Creator<MixPushMessage>() {
+    public static final Parcelable.Creator<YiPushMessage> CREATOR = new Parcelable.Creator<YiPushMessage>() {
         @Override
-        public MixPushMessage createFromParcel(Parcel source) {
-            return new MixPushMessage(source);
+        public YiPushMessage createFromParcel(Parcel source) {
+            return new YiPushMessage(source);
         }
 
         @Override
-        public MixPushMessage[] newArray(int size) {
-            return new MixPushMessage[size];
+        public YiPushMessage[] newArray(int size) {
+            return new YiPushMessage[size];
         }
     };
 }

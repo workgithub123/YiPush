@@ -1,10 +1,10 @@
 package com.yipush.core;
 
-public class MixPushPlatform {
+public class YiPushPlatform {
     private String platformName;
     private String regId;
 
-    public MixPushPlatform(String platformName, String regId) {
+    public YiPushPlatform(String platformName, String regId) {
         this.platformName = platformName;
         this.regId = regId;
     }

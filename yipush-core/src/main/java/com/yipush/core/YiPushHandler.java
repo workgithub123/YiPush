@@ -6,46 +6,46 @@ import android.util.Log;
 
 import com.yipush.core.net.Logg;
 
-public class MixPushHandler {
-    private final MixPushLogger logger;
-    private final MixPushReceiver pushReceiver;
-    private final MixPushPassThroughReceiver passThroughReceiver;
-    public MixPushLogger callLogger;
-    public MixPushReceiver callPushReceiver;
-    public MixPushPassThroughReceiver callPassThroughReceiver;
+public class YiPushHandler {
+    private final YiPushLogger logger;
+    private final YiPushReceiver pushReceiver;
+    private final YiPushPassThroughReceiver passThroughReceiver;
+    public YiPushLogger callLogger;
+    public YiPushReceiver callPushReceiver;
+    public YiPushPassThroughReceiver callPassThroughReceiver;
 
-    public MixPushHandler() {
-        logger = new DefaultMixPushLogger(this);
-        pushReceiver = new DefaultMixPushReceiver(this, logger);
+    public YiPushHandler() {
+        logger = new DefaultYiPushLogger(this);
+        pushReceiver = new DefaultYiPushReceiver(this, logger);
         passThroughReceiver = new DefaultPassThroughReceiver(this, logger);
     }
 
-    public MixPushLogger getLogger() {
+    public YiPushLogger getLogger() {
         return logger;
     }
 
-    public MixPushReceiver getPushReceiver() {
+    public YiPushReceiver getPushReceiver() {
         return pushReceiver;
     }
 
-    public MixPushPassThroughReceiver getPassThroughReceiver() {
+    public YiPushPassThroughReceiver getPassThroughReceiver() {
         return passThroughReceiver;
     }
 }
 
-class DefaultPassThroughReceiver implements MixPushPassThroughReceiver {
-    private final MixPushLogger logger;
-    private MixPushHandler handler;
+class DefaultPassThroughReceiver implements YiPushPassThroughReceiver {
+    private final YiPushLogger logger;
+    private YiPushHandler handler;
     public static String TAG = "UnifiedPush";
-    static MixPushPlatform passThroughPlatform = null;
+    static YiPushPlatform passThroughPlatform = null;
 
-    public DefaultPassThroughReceiver(MixPushHandler handler, MixPushLogger logger) {
+    public DefaultPassThroughReceiver(YiPushHandler handler, YiPushLogger logger) {
         this.handler = handler;
         this.logger = logger;
     }
 
     @Override
-    public void onRegisterSucceed(final Context context, final MixPushPlatform pushPlatform) {
+    public void onRegisterSucceed(final Context context, final YiPushPlatform pushPlatform) {
         if (passThroughPlatform != null) {
             Logg.e(TAG, "已经响应onRegisterSucceed,不再重复调用");
             return;
@@ -66,49 +66,49 @@ class DefaultPassThroughReceiver implements MixPushPassThroughReceiver {
     }
 
     @Override
-    public void onReceiveMessage(Context context, MixPushMessage message) {
+    public void onReceiveMessage(Context context, YiPushMessage message) {
         Logg.e(TAG, "PassThroughReceiver.onReceiveMessage " + message.toString());
         handler.callPassThroughReceiver.onReceiveMessage(context, message);
     }
 }
 
-class DefaultMixPushReceiver extends MixPushReceiver {
-    private final MixPushLogger logger;
-    private MixPushHandler handler;
+class DefaultYiPushReceiver extends YiPushReceiver {
+    private final YiPushLogger logger;
+    private YiPushHandler handler;
     public static String TAG = "UnifiedPush";
-    static MixPushPlatform notificationPlatform = null;
+    static YiPushPlatform notificationPlatform = null;
 
-    public DefaultMixPushReceiver(MixPushHandler handler, MixPushLogger logger) {
+    public DefaultYiPushReceiver(YiPushHandler handler, YiPushLogger logger) {
         this.handler = handler;
         this.logger = logger;
     }
 
     @Override
-    public void onRegisterSucceed(final Context context, final MixPushPlatform mixPushPlatform) {
+    public void onRegisterSucceed(final Context context, final YiPushPlatform yiPushPlatform) {
         if (notificationPlatform != null) {
             Logg.e(TAG, "已经响应onRegisterSucceed,不再重复调用");
             return;
         }
-        notificationPlatform = mixPushPlatform;
-        Logg.e(TAG, "onRegisterSucceed " + mixPushPlatform.toString());
+        notificationPlatform = yiPushPlatform;
+        Logg.e(TAG, "onRegisterSucceed " + yiPushPlatform.toString());
         if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
             // 在异步进程回调,避免阻塞主进程
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    handler.callPushReceiver.onRegisterSucceed(context, mixPushPlatform);
+                    handler.callPushReceiver.onRegisterSucceed(context, yiPushPlatform);
                 }
             }).start();
         } else {
-            handler.callPushReceiver.onRegisterSucceed(context, mixPushPlatform);
+            handler.callPushReceiver.onRegisterSucceed(context, yiPushPlatform);
         }
     }
 
     @Override
-    public void onNotificationMessageClicked(Context context, MixPushMessage message) {
+    public void onNotificationMessageClicked(Context context, YiPushMessage message) {
         Logg.e(TAG, "onNotificationMessageClicked " + message.toString());
         if (message.getPayload() == null || message.getPayload().length() < 5) {
-            MixPushClient.getInstance().openApp(context);
+            YiPushClient.getInstance().openApp(context);
             handler.callPushReceiver.openAppCallback(context);
         } else {
             handler.callPushReceiver.onNotificationMessageClicked(context, message);
@@ -117,28 +117,28 @@ class DefaultMixPushReceiver extends MixPushReceiver {
 
 
     @Override
-    public void onNotificationMessageArrived(Context context, MixPushMessage message) {
+    public void onNotificationMessageArrived(Context context, YiPushMessage message) {
         Logg.e(TAG, "onNotificationMessageArrived " + message.toString());
         handler.callPushReceiver.onNotificationMessageArrived(context, message);
     }
 }
 
-class DefaultMixPushLogger implements MixPushLogger {
+class DefaultYiPushLogger implements YiPushLogger {
 
-    private MixPushHandler handler;
+    private YiPushHandler handler;
 
-    public DefaultMixPushLogger(MixPushHandler handler) {
+    public DefaultYiPushLogger(YiPushHandler handler) {
         this.handler = handler;
     }
 
     @Override
     public void log(String tag, String content, Throwable throwable) {
-        if (!tag.contains(MixPushClient.TAG)) {
-            tag = MixPushClient.TAG + "-" + tag;
+        if (!tag.contains(YiPushClient.TAG)) {
+            tag = YiPushClient.TAG + "-" + tag;
         }
         if (handler.callLogger != null) {
             handler.callLogger.log(tag, content, throwable);
-        } else if (MixPushClient.debug) {
+        } else if (YiPushClient.debug) {
             Log.e(tag, content);
             if (throwable != null) {
                 throwable.printStackTrace();
@@ -148,12 +148,12 @@ class DefaultMixPushLogger implements MixPushLogger {
 
     @Override
     public void log(String tag, String content) {
-        if (!tag.contains(MixPushClient.TAG)) {
-            tag = MixPushClient.TAG + "-" + tag;
+        if (!tag.contains(YiPushClient.TAG)) {
+            tag = YiPushClient.TAG + "-" + tag;
         }
         if (handler.callLogger != null) {
             handler.callLogger.log(tag, content);
-        } else if (MixPushClient.debug) {
+        } else if (YiPushClient.debug) {
             Log.e(tag, content);
         }
     }

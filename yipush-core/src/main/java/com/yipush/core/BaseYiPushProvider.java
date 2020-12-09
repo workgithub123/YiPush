@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-public abstract class BaseMixPushProvider {
+public abstract class BaseYiPushProvider {
     public abstract void register(Context context, RegisterType type);
 
     public abstract void unRegister(Context context);

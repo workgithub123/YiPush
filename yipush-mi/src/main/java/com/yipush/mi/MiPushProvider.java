@@ -3,17 +3,17 @@ package com.yipush.mi;
 import android.content.Context;
 
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
-import com.yipush.core.BaseMixPushProvider;
+import com.yipush.core.BaseYiPushProvider;
 import com.yipush.core.RegisterType;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
-public class MiPushProvider extends BaseMixPushProvider {
+public class MiPushProvider extends BaseYiPushProvider {
     public static final String MI = "mi";
     public static String TAG = MI;
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
     static RegisterType registerType;
 
     @Override

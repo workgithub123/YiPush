@@ -5,13 +5,13 @@ import android.os.Build;
 
 import com.heytap.msp.push.HeytapPushManager;
 import com.heytap.msp.push.callback.ICallBackResultService;
-import com.yipush.core.BaseMixPushProvider;
-import com.yipush.core.MixPushPlatform;
+import com.yipush.core.BaseYiPushProvider;
+import com.yipush.core.YiPushPlatform;
 import com.yipush.core.RegisterType;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
 
-public class OppoPushProvider extends BaseMixPushProvider {
+public class OppoPushProvider extends BaseYiPushProvider {
     public static final String OPPO = "oppo";
     public static final String TAG = OPPO;
 
@@ -20,12 +20,12 @@ public class OppoPushProvider extends BaseMixPushProvider {
     public void register(Context context, RegisterType type) {
         String appSecret = getMetaData(context, "OPPO_APP_SECRET");
         String appKey = getMetaData(context, "OPPO_APP_KEY");
-        HeytapPushManager.init(context, MixPushClient.debug);
+        HeytapPushManager.init(context, YiPushClient.debug);
         HeytapPushManager.register(context, appKey, appSecret, new MyCallBackResultService(context.getApplicationContext()));
         String registerID = HeytapPushManager.getRegisterID();
         if (registerID != null) {
-            MixPushPlatform mixPushPlatform = new MixPushPlatform(OppoPushProvider.OPPO, registerID);
-            MixPushClient.getInstance().getHandler().getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+            YiPushPlatform yiPushPlatform = new YiPushPlatform(OppoPushProvider.OPPO, registerID);
+            YiPushClient.getInstance().getHandler().getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
         }
     }
 
@@ -61,7 +61,7 @@ public class OppoPushProvider extends BaseMixPushProvider {
 
 class MyCallBackResultService implements ICallBackResultService {
     Context context;
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 
 
     public MyCallBackResultService(Context context) {
@@ -71,8 +71,8 @@ class MyCallBackResultService implements ICallBackResultService {
     @Override
     public void onRegister(int responseCode, String registerID) {
         handler.getLogger().log(OppoPushProvider.TAG, "onRegister responseCode = " + responseCode + ", registerID = " + registerID);
-        MixPushPlatform mixPushPlatform = new MixPushPlatform(OppoPushProvider.OPPO, registerID);
-        handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+        YiPushPlatform yiPushPlatform = new YiPushPlatform(OppoPushProvider.OPPO, registerID);
+        handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
     }
 
     @Override

@@ -12,10 +12,10 @@ import com.meizu.cloud.pushsdk.platform.message.RegisterStatus;
 import com.meizu.cloud.pushsdk.platform.message.SubAliasStatus;
 import com.meizu.cloud.pushsdk.platform.message.SubTagsStatus;
 import com.meizu.cloud.pushsdk.platform.message.UnRegisterStatus;
-import com.yipush.core.MixPushPlatform;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
-import com.yipush.core.MixPushMessage;
+import com.yipush.core.YiPushPlatform;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
+import com.yipush.core.YiPushMessage;
 
 
 /**
@@ -26,14 +26,14 @@ public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
     private static final String TAG = MeizuPushProvider.MEIZU;
     private int mipush_notification;
     private int mipush_small_notification;
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 
     @Override
     @Deprecated
     public void onRegister(Context context, String pushId) {
         Log.i(TAG, "onRegister " + pushId);
-        MixPushPlatform mixPushPlatform = new MixPushPlatform(MeizuPushProvider.MEIZU, pushId);
-        handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+        YiPushPlatform yiPushPlatform = new YiPushPlatform(MeizuPushProvider.MEIZU, pushId);
+        handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
     @Override
     public void onMessage(Context context, String content) {
         //接收服务器推送的透传消息
-        MixPushMessage message = new MixPushMessage();
+        YiPushMessage message = new YiPushMessage();
         message.setPlatform(MeizuPushProvider.MEIZU);
         message.setPayload(content);
         message.setPassThrough(true);
@@ -83,8 +83,8 @@ public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
     @Override
     public void onRegisterStatus(Context context, RegisterStatus registerStatus) {
         Log.i(TAG, "onRegisterStatus " + registerStatus);
-        MixPushPlatform mixPushPlatform = new MixPushPlatform(MeizuPushProvider.MEIZU, registerStatus.getPushId());
-        handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+        YiPushPlatform yiPushPlatform = new YiPushPlatform(MeizuPushProvider.MEIZU, registerStatus.getPushId());
+        handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
     @Override
     public void onNotificationClicked(Context context, MzPushMessage mzPushMessage) {
         super.onNotificationClicked(context, mzPushMessage);
-        MixPushMessage message = new MixPushMessage();
+        YiPushMessage message = new YiPushMessage();
         message.setPlatform(MeizuPushProvider.MEIZU);
 //        message.setMsgId(mzPushMessage.getTaskId());
         message.setTitle(mzPushMessage.getTitle());
@@ -120,7 +120,7 @@ public class MeizuPushMsgReceiver extends MzPushMessageReceiver {
     @Override
     public void onNotificationArrived(Context context, MzPushMessage mzPushMessage) {
         super.onNotificationArrived(context, mzPushMessage);
-        MixPushMessage message = new MixPushMessage();
+        YiPushMessage message = new YiPushMessage();
         message.setPlatform(MeizuPushProvider.MEIZU);
 //        message.setMsgId(mzPushMessage.getTaskId());
         message.setTitle(mzPushMessage.getTitle());

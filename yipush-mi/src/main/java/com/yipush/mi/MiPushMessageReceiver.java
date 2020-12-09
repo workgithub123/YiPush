@@ -2,18 +2,18 @@ package com.yipush.mi;
 
 import android.content.Context;
 
-import com.yipush.core.MixPushPlatform;
+import com.yipush.core.YiPushPlatform;
 import com.yipush.core.RegisterType;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
-import com.yipush.core.MixPushMessage;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
+import com.yipush.core.YiPushMessage;
 import com.xiaomi.mipush.sdk.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MiPushMessageReceiver extends PushMessageReceiver {
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 //    private String mRegId;
 
     //    private long mResultCode = -1;
@@ -27,7 +27,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 //    private String mEndTime;
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
-        MixPushMessage pushMessage = new MixPushMessage();
+        YiPushMessage pushMessage = new YiPushMessage();
         pushMessage.setPlatform(MiPushProvider.MI);
         pushMessage.setTitle(message.getTitle());
         pushMessage.setPayload(message.getContent());
@@ -38,7 +38,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message) {
-        MixPushMessage pushMessage = new MixPushMessage();
+        YiPushMessage pushMessage = new YiPushMessage();
         pushMessage.setPlatform(MiPushProvider.MI);
         pushMessage.setTitle(message.getTitle());
         pushMessage.setDescription(message.getDescription());
@@ -48,7 +48,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
-        MixPushMessage pushMessage = new MixPushMessage();
+        YiPushMessage pushMessage = new YiPushMessage();
         pushMessage.setPlatform(MiPushProvider.MI);
         pushMessage.setTitle(message.getTitle());
         pushMessage.setDescription(message.getDescription());
@@ -102,15 +102,15 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         String cmdArg2 = ((arguments != null && arguments.size() > 1) ? arguments.get(1) : null);
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
-                MixPushPlatform mixPushPlatform = new MixPushPlatform(MiPushProvider.MI, cmdArg1);
+                YiPushPlatform yiPushPlatform = new YiPushPlatform(MiPushProvider.MI, cmdArg1);
 
                 if (MiPushProvider.registerType == RegisterType.all) {
-                    handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
-                    handler.getPassThroughReceiver().onRegisterSucceed(context, mixPushPlatform);
+                    handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
+                    handler.getPassThroughReceiver().onRegisterSucceed(context, yiPushPlatform);
                 } else if (MiPushProvider.registerType == RegisterType.notification) {
-                    handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+                    handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
                 } else if (MiPushProvider.registerType == RegisterType.passThrough) {
-                    handler.getPassThroughReceiver().onRegisterSucceed(context, mixPushPlatform);
+                    handler.getPassThroughReceiver().onRegisterSucceed(context, yiPushPlatform);
                 }
             }
         }

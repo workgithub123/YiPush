@@ -2,19 +2,19 @@ package com.yipush.vivo;
 
 import android.content.Context;
 
-import com.yipush.core.MixPushPlatform;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushHandler;
-import com.yipush.core.MixPushMessage;
+import com.yipush.core.YiPushPlatform;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushHandler;
+import com.yipush.core.YiPushMessage;
 import com.vivo.push.model.UPSNotificationMessage;
 import com.vivo.push.sdk.OpenClientPushMessageReceiver;
 
 public class PushMessageReceiverImpl extends OpenClientPushMessageReceiver {
-    MixPushHandler handler = MixPushClient.getInstance().getHandler();
+    YiPushHandler handler = YiPushClient.getInstance().getHandler();
 
     @Override
     public void onNotificationMessageClicked(Context context, UPSNotificationMessage message) {
-        MixPushMessage pushMessage = new MixPushMessage();
+        YiPushMessage pushMessage = new YiPushMessage();
         pushMessage.setPlatform(VivoPushProvider.VIVO);
 //        pushMessage.setMsgId(String.valueOf(message.getMsgId()));
         pushMessage.setTitle(message.getTitle());
@@ -26,7 +26,7 @@ public class PushMessageReceiverImpl extends OpenClientPushMessageReceiver {
 
     @Override
     public void onReceiveRegId(Context context, String regId) {
-        MixPushPlatform mixPushPlatform = new MixPushPlatform(VivoPushProvider.VIVO, regId);
-        handler.getPushReceiver().onRegisterSucceed(context, mixPushPlatform);
+        YiPushPlatform yiPushPlatform = new YiPushPlatform(VivoPushProvider.VIVO, regId);
+        handler.getPushReceiver().onRegisterSucceed(context, yiPushPlatform);
     }
 }

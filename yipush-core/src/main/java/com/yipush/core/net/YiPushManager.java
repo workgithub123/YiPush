@@ -7,10 +7,10 @@ import android.os.Build;
 
 import com.yanzhenjie.nohttp.Logger;
 import com.yipush.core.GetRegisterIdCallback;
-import com.yipush.core.MixPushClient;
-import com.yipush.core.MixPushPassThroughReceiver;
-import com.yipush.core.MixPushPlatform;
-import com.yipush.core.MixPushReceiver;
+import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushPassThroughReceiver;
+import com.yipush.core.YiPushPlatform;
+import com.yipush.core.YiPushReceiver;
 import com.yipush.core.utils.MyShared;
 
 /**
@@ -53,14 +53,14 @@ public class YiPushManager {
      * @param mixPushPassThroughReceiver 穿透注册回调
      */
     public static void init(Context application
-            , String appkey, String secret, MixPushReceiver mixPushReceiver
-            , MixPushPassThroughReceiver mixPushPassThroughReceiver) {
+            , String appkey, String secret, YiPushReceiver mixPushReceiver
+            , YiPushPassThroughReceiver mixPushPassThroughReceiver) {
         APPKEY = appkey;
         APP_SECRET = secret;
         content = application;
-        MixPushClient.getInstance().setPushReceiver(mixPushReceiver);
-        MixPushClient.getInstance().setPassThroughReceiver(mixPushPassThroughReceiver);
-        MixPushClient.getInstance().register(application);
+        YiPushClient.getInstance().setPushReceiver(mixPushReceiver);
+        YiPushClient.getInstance().setPassThroughReceiver(mixPushPassThroughReceiver);
+        YiPushClient.getInstance().register(application);
         getNoHttpHelper(application);
         regist(application);
     }
@@ -79,8 +79,8 @@ public class YiPushManager {
      * @param context
      */
     public static void regist(Context context) {
-        MixPushClient.getInstance().getRegisterId(context, new GetRegisterIdCallback() {
-            public void callback(MixPushPlatform platform) {
+        YiPushClient.getInstance().getRegisterId(context, new GetRegisterIdCallback() {
+            public void callback(YiPushPlatform platform) {
                 if (platform != null) {
                     try {
                         net(platform.getRegId());

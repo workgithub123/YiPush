@@ -2,21 +2,21 @@ package com.yipush.core;
 
 import android.content.Context;
 
-public abstract class MixPushReceiver {
+public abstract class YiPushReceiver {
     /**
      * 通知栏推送SDK注册成功回调
      */
-    public abstract void onRegisterSucceed(Context context, MixPushPlatform mixPushPlatform);
+    public abstract void onRegisterSucceed(Context context, YiPushPlatform yiPushPlatform);
 
     /**
      * 通知栏消息被点击回调
      */
-    public abstract void onNotificationMessageClicked(Context context, MixPushMessage message);
+    public abstract void onNotificationMessageClicked(Context context, YiPushMessage message);
 
     /**
      * 通知栏消息消息到达回调
      */
-    public void onNotificationMessageArrived(Context context, MixPushMessage message) {
+    public void onNotificationMessageArrived(Context context, YiPushMessage message) {
 
     }
 
