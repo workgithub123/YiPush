@@ -75,7 +75,7 @@ apply plugin: 'com.huawei.agconnect'
     
     dependencies {
     
-    implementation 'com.github.workgithub123:YiPush:tag'//tag改成版本号
+    implementation 'com.github.workgithubly:YiPush:tag'//tag改成版本号
     
 }
 
