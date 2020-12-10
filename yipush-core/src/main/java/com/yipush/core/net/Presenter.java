@@ -2,6 +2,8 @@ package com.yipush.core.net;
 
 import android.util.ArrayMap;
 
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yipush.core.utils.JSONUtil;
 import com.yipush.core.utils.MyShared;
 import com.yipush.core.utils.SignUtil;
 
@@ -17,6 +19,7 @@ public class Presenter {
     private static final String registerDevice = "v1/frontend/appsdk/registerDevice";
     private static final String imActive = "v1/frontend/appsdk/imActive";
     private static final String unregisterDevice = "v1/frontend/appsdk/unregisterDevice";
+    private static final String reportMessageReceived = "v1/frontend/appsdk/reportMessageReceived";
 
      static void registerDevice(String regId,String platform) throws Exception {
         Map<String, String> map = new ArrayMap<>();
@@ -56,6 +59,22 @@ public class Presenter {
         map.put("nonceStr", SignUtil.generateNonceStr());
         String jsonReq = SignUtil.generateSignedJson(map, YiPushManager.APP_SECRET);
         NohttpRequest.urlPost(1, BASE_URL + imActive, jsonReq,
+                 false, "", new BaseResponseWrapper<BaseResponseEntity<String>>() {
+                    @Override
+                    public void onSucceed(BaseResponseEntity<String> baseResponseEntity) {
+
+                    }
+                });
+
+    }
+    public static void reportMessageReceived() throws Exception {
+        Map map = new ArrayMap<>();
+        map.put("count", 1+"");
+        map.put("nonceStr", SignUtil.generateNonceStr());
+        map.put("sign", SignUtil.generateSignature(map, YiPushManager.APP_SECRET, SignUtil.SignType.MD5));
+        map.put("count",1);
+        String jsonReq = JSONUtil.marshal(map);
+        NohttpRequest.urlPost(1, BASE_URL + reportMessageReceived, jsonReq,
                  false, "", new BaseResponseWrapper<BaseResponseEntity<String>>() {
                     @Override
                     public void onSucceed(BaseResponseEntity<String> baseResponseEntity) {

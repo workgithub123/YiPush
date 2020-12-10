@@ -10,7 +10,7 @@ import android.util.Log;
 public class Logg {
 
 
-    private static final String DEFAULT_TAG = "LY_LOGGER";
+    private static final String DEFAULT_TAG = "YiPush_LOGGER";
     //规定每段显示的长度
     private static int LOG_MAXLENGTH = 4000;
     public static void e(Object tag,String message){

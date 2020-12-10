@@ -16,7 +16,7 @@ import com.yipush.core.utils.GsonTools;
 
 public class NohttpRequest {
 
-    public static final String TAG = "NoHttp_TAG";
+    public static final String TAG = "YiPush-Http_TAG";
     /**
      * 成功
      */

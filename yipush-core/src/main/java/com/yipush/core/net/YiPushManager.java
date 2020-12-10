@@ -26,7 +26,7 @@ public class YiPushManager {
     public static NoHttpHelper noHttpHelper;
     public static Context content;
 
-    private static String TAG = "YiPushManager";
+    private static String TAG = "YiPush-Manager";
     private static String regId;
 
     public static boolean isDEBUG() {

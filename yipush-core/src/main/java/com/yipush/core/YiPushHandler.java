@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.yipush.core.net.Logg;
+import com.yipush.core.net.Presenter;
 
 public class YiPushHandler {
     private final YiPushLogger logger;
@@ -36,7 +37,7 @@ public class YiPushHandler {
 class DefaultPassThroughReceiver implements YiPushPassThroughReceiver {
     private final YiPushLogger logger;
     private YiPushHandler handler;
-    public static String TAG = "UnifiedPush";
+    public static String TAG = "YiPush-UnifiedPush";
     static YiPushPlatform passThroughPlatform = null;
 
     public DefaultPassThroughReceiver(YiPushHandler handler, YiPushLogger logger) {
@@ -69,13 +70,18 @@ class DefaultPassThroughReceiver implements YiPushPassThroughReceiver {
     public void onReceiveMessage(Context context, YiPushMessage message) {
         Logg.e(TAG, "PassThroughReceiver.onReceiveMessage " + message.toString());
         handler.callPassThroughReceiver.onReceiveMessage(context, message);
+        try {
+            Presenter.reportMessageReceived();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
 class DefaultYiPushReceiver extends YiPushReceiver {
     private final YiPushLogger logger;
     private YiPushHandler handler;
-    public static String TAG = "UnifiedPush";
+    public static String TAG = "YiPush-UnifiedPush";
     static YiPushPlatform notificationPlatform = null;
 
     public DefaultYiPushReceiver(YiPushHandler handler, YiPushLogger logger) {
@@ -120,6 +126,11 @@ class DefaultYiPushReceiver extends YiPushReceiver {
     public void onNotificationMessageArrived(Context context, YiPushMessage message) {
         Logg.e(TAG, "onNotificationMessageArrived " + message.toString());
         handler.callPushReceiver.onNotificationMessageArrived(context, message);
+        try {
+            Presenter.reportMessageReceived();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yipush.core.net.Presenter;
 import com.yipush.core.net.YiPushManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,19 @@ public class MainActivity extends AppCompatActivity {
     public void imActive(View v){
         try {
             YiPushManager.imActive();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Presenter.reportMessageReceived();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void jishu(View v){
+        try {
+            Presenter.reportMessageReceived();
         } catch (Exception e) {
             e.printStackTrace();
         }

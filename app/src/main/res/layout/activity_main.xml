@@ -32,12 +32,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:text="unregisterDevice"
+        android:text="注销"
         android:onClick="unregisterDevice"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:text="imActive"
+        android:text="保活"
         android:onClick="imActive"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="计数"
+        android:onClick="jishu"/>
 </LinearLayout>
