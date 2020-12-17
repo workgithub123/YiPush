@@ -74,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void unregisterDevice(View v) {
 
+        Intent intent = new Intent(this,SettingsActivity.class);
+        intent.setAction("");
+        startActivity(intent);
         try {
             YiPushManager.unregisterDevice();
         } catch (Exception e) {

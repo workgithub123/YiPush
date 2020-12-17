@@ -15,11 +15,11 @@ import java.util.Map;
  */
 public class Presenter {
 
-    private static final String BASE_URL = "http://192.168.8.74:10191/";
-    private static final String registerDevice = "v1/frontend/appsdk/registerDevice";
-    private static final String imActive = "v1/frontend/appsdk/imActive";
-    private static final String unregisterDevice = "v1/frontend/appsdk/unregisterDevice";
-    private static final String reportMessageReceived = "v1/frontend/appsdk/reportMessageReceived";
+    private static final String BASE_URL = "https://dev.fadefeet.com/push-server/frontend/v1/appsdk/";
+    private static final String registerDevice = "/registerDevice";
+    private static final String imActive = "/imActive";
+    private static final String unregisterDevice = "/unregisterDevice";
+    private static final String reportMessageReceived = "/reportMessageReceived";
 
      static void registerDevice(String regId,String platform) throws Exception {
         Map<String, String> map = new ArrayMap<>();

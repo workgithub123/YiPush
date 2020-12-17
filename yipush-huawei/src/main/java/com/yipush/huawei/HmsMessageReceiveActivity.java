@@ -23,7 +23,7 @@ public class HmsMessageReceiveActivity extends Activity {
             message.setPayload(data.getQueryParameter("payload"));
             YiPushClient.getInstance().getHandler().getPushReceiver().onNotificationMessageClicked(this,message);
         }
-        //// yipush://com.scqjmagic.yipush.huawei/message?title=title&description=description&payload=%7b%22url%22%3a%22http%3a%2f%2fsoso.com%22%7d
+        // yipush://com.scqjmagic.yipush.huawei/message?title=title&description=description&payload=%7b%22url%22%3a%22http%3a%2f%2fsoso.com%22%7d
 
     }
 }
