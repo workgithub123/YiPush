@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import com.yipush.core.YiPushClient;
 import com.yipush.core.YiPushMessage;
+import com.yipush.core.net.Logg;
 
 public class HmsMessageReceiveActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Uri data = getIntent().getData();
+        Logg.e("HmsMessageReceiveActivity",data.toString());
         this.finish();
         if(data != null){
             YiPushMessage message = new YiPushMessage();
@@ -21,7 +23,7 @@ public class HmsMessageReceiveActivity extends Activity {
             message.setPayload(data.getQueryParameter("payload"));
             YiPushClient.getInstance().getHandler().getPushReceiver().onNotificationMessageClicked(this,message);
         }
-        //// mixpush://com.mixpush.huawei/message?title=title&description=description&payload=%7b%22url%22%3a%22http%3a%2f%2fsoso.com%22%7d
+        //// yipush://com.scqjmagic.yipush.huawei/message?title=title&description=description&payload=%7b%22url%22%3a%22http%3a%2f%2fsoso.com%22%7d
 
     }
 }

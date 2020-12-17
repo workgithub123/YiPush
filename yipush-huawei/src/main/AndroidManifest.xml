@@ -18,9 +18,9 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <data
-                        android:host="com.mixpush.huawei"
+                        android:host="com.scqjmagic.yipush.huawei"
                         android:path="/message"
-                        android:scheme="mixpush" />
+                        android:scheme="yipush" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

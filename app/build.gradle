@@ -8,11 +8,11 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.ly.yipush"
+        applicationId "com.scqjmagic.yipush"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 8
+        versionName "1.0.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -21,18 +21,39 @@ android {
         manifestPlaceholders["MI_APP_KEY"] = "5411885491336"
         manifestPlaceholders["VIVO_APP_ID"] = "105309369"
         manifestPlaceholders["VIVO_APP_KEY"] = "c86e7acc1bc4297bf4c596369fdbfdcc"
-        manifestPlaceholders["OPPO_APP_KEY"] = "<OPPO_APP_KEY>"
-        manifestPlaceholders["OPPO_APP_SECRET"] = "<OPPO_APP_SECRET>"
-        manifestPlaceholders["MEIZU_APP_ID"] = "<MEIZU_APP_ID>"
-        manifestPlaceholders["MEIZU_APP_KEY"] = "<MEIZU_APP_KEY>"
+        manifestPlaceholders["OPPO_APP_KEY"] = "30435203"
+        manifestPlaceholders["OPPO_APP_SECRET"] = "1a5147f875a44c9ebaffefbcaa0af4a9"
+        manifestPlaceholders["MEIZU_APP_ID"] = "137480"
+        manifestPlaceholders["MEIZU_APP_KEY"] = "c292b6b543064b50bba14aa42dc95480"
     }
-
+    signingConfigs {
+        signConfig {
+            storeFile file("../doc/sccsj.keystore")
+            storePassword 'csj112233'
+            keyAlias 'sccsj'
+            keyPassword 'csj112233'
+            v2SigningEnabled true//v2签名
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.signConfig
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +65,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.preference:preference:1.1.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

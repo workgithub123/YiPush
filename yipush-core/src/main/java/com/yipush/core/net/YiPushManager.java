@@ -3,9 +3,12 @@ package com.yipush.core.net;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Looper;
 
 import com.yanzhenjie.nohttp.Logger;
+import com.yanzhenjie.nohttp.NoHttp;
 import com.yipush.core.GetRegisterIdCallback;
 import com.yipush.core.YiPushClient;
 import com.yipush.core.YiPushPassThroughReceiver;
@@ -18,17 +21,13 @@ import com.yipush.core.utils.MyShared;
  * Describe:LY
  */
 public class YiPushManager {
-
-
     public static String APPKEY = "";
     public static String APP_SECRET = "";
     private static boolean DEBUG = false;
     public static NoHttpHelper noHttpHelper;
     public static Context content;
-
     private static String TAG = "YiPush-Manager";
     private static String regId;
-
     public static boolean isDEBUG() {
         return DEBUG;
     }
@@ -44,10 +43,7 @@ public class YiPushManager {
     }
 
     public static String getRegId(){
-        if (isDEBUG()){
-            return regId;
-        }
-        return "debug mode required";
+        return regId;
     }
     /**
      * 初始化
@@ -56,17 +52,17 @@ public class YiPushManager {
      * @param application                必须 Application
      * @param appkey                     appkey
      * @param appkey                     appsecret
-     * @param mixPushReceiver            通知栏注册回调
-     * @param mixPushPassThroughReceiver 穿透注册回调
+     * @param yiPushReceiver            通知栏注册回调
+     * @param yiPushPassThroughReceiver 穿透注册回调
      */
     public static void init(Context application
-            , String appkey, String secret, YiPushReceiver mixPushReceiver
-            , YiPushPassThroughReceiver mixPushPassThroughReceiver) {
+            , String appkey, String secret, YiPushReceiver yiPushReceiver
+            , YiPushPassThroughReceiver yiPushPassThroughReceiver) {
         APPKEY = appkey;
         APP_SECRET = secret;
         content = application;
-        YiPushClient.getInstance().setPushReceiver(mixPushReceiver);
-        YiPushClient.getInstance().setPassThroughReceiver(mixPushPassThroughReceiver);
+        YiPushClient.getInstance().setPushReceiver(yiPushReceiver);
+        YiPushClient.getInstance().setPassThroughReceiver(yiPushPassThroughReceiver);
         YiPushClient.getInstance().register(application);
         getNoHttpHelper(application);
         regist(application);
@@ -81,17 +77,49 @@ public class YiPushManager {
 
     /**
      * 推送注册
-     * 可用于重注册
+     * 可用于重注册（init时已经调用）
      *
      * @param context
      */
-    public static void regist(Context context) {
+    private static void regist(Context context) {
         YiPushClient.getInstance().getRegisterId(context, new GetRegisterIdCallback() {
             public void callback(YiPushPlatform platform) {
                 if (platform != null) {
                     try {
                         regId=platform.getRegId();
-                        Logg.e(TAG,"RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
+                        Intent intent = new Intent();
+                        intent.setAction("com.ly.yipush.testMsgBroadcastFilterRegist");
+                        context.sendBroadcast(intent);
+                        String hd =  Looper.myLooper() != Looper.getMainLooper()?"子线程回调：":"主线程回调：";
+                        Logg.e(TAG,hd+ "RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
+                        net(platform.getRegId(),platform.getPlatformName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Logg.e(TAG, "platform of getRegisterId is null");
+                }
+            }
+        });
+    }
+
+    /**动态注册
+     * @param application
+     * @param appkey
+     * @param secret
+     */
+    public static void regist(Context application, String appkey, String secret) {
+        APPKEY = appkey;
+        APP_SECRET = secret;
+        content = application;
+        NoHttp.getInitializeConfig().getHeaders().add("x-app-key",  YiPushManager.APPKEY);
+        YiPushClient.getInstance().getRegisterId(application, new GetRegisterIdCallback() {
+            public void callback(YiPushPlatform platform) {
+                if (platform != null) {
+                    try {
+                        regId=platform.getRegId();
+                        Logg.e(TAG, Looper.myLooper() != Looper.getMainLooper()?"子线程回调：":"主线程回调："+
+                                "RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
                         net(platform.getRegId(),platform.getPlatformName());
                     } catch (Exception e) {
                         e.printStackTrace();

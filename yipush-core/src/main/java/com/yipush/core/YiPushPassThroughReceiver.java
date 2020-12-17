@@ -5,7 +5,7 @@ import android.content.Context;
 public interface YiPushPassThroughReceiver {
 
     /**
-     * 透传推送SDK注册成功回调
+     * 透传推送SDK注册成功回调(优先走YiPushReceiver.onRegisterSucceed)
      */
   public   void onRegisterSucceed(Context context, YiPushPlatform platform);
 

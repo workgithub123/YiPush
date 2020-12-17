@@ -22,7 +22,9 @@ public class MyApplication extends Application {
         super.onCreate();
         instante = this;
         YiPushManager.setDEBUG(true);
-        YiPushManager.init(this,"0823a2d92fef421db7559c2907089232","5811426b33e84439b07a30a2dbec4418"
-                , new YIPushReceiver(),new YiPushPassThroughReceiver());
+        YiPushManager.init(this
+                ,"0823a2d92fef421db7559c2907089232"
+                ,"5811426b33e84439b07a30a2dbec4418"
+                , new MyPushReceiver(),new MyPushPassThroughReceiver());
     }
 }
