@@ -11,20 +11,20 @@ android {
         applicationId "com.scqjmagic.yipush"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 9
-        versionName "1.0.0.4"
+        versionCode 11
+        versionName "1.0.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
         manifestPlaceholders["MI_APP_ID"] = "2882303761518854336"
         manifestPlaceholders["MI_APP_KEY"] = "5411885491336"
-        manifestPlaceholders["VIVO_APP_ID"] = "105309369"
-        manifestPlaceholders["VIVO_APP_KEY"] = "c86e7acc1bc4297bf4c596369fdbfdcc"
-        manifestPlaceholders["OPPO_APP_KEY"] = "30435203"
-        manifestPlaceholders["OPPO_APP_SECRET"] = "1a5147f875a44c9ebaffefbcaa0af4a9"
-        manifestPlaceholders["MEIZU_APP_ID"] = "137480"
-        manifestPlaceholders["MEIZU_APP_KEY"] = "c292b6b543064b50bba14aa42dc95480"
+        manifestPlaceholders["VIVO_APP_ID"] = "105363441"
+        manifestPlaceholders["VIVO_APP_KEY"] = "307d766515921b0d2603cdbe00e5512f"
+        manifestPlaceholders["OPPO_APP_KEY"] = "c8a441ad2a1b4385923d7b4b53371658"
+        manifestPlaceholders["OPPO_APP_SECRET"] = "5e0b40262e14480fac7d990e7cb3cf08"
+        manifestPlaceholders["MEIZU_APP_ID"] = "137489"
+        manifestPlaceholders["MEIZU_APP_KEY"] = "c3ba44b8662d4c65ae044c3b9997fe9d"
     }
     signingConfigs {
         signConfig {

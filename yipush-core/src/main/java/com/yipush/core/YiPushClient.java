@@ -36,6 +36,10 @@ public class YiPushClient {
     public YiPushClient() {
 
     }
+    public void  unregist(Context c){
+        if (notificationPushProvider!=null) notificationPushProvider.unRegister(c);
+        if (passThroughPushProvider!=null) passThroughPushProvider.unRegister(c);
+    }
 
     public void addPlatformProvider(BaseYiPushProvider provider) {
         String platformName = provider.getPlatformName();

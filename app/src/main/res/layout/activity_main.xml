@@ -56,6 +56,13 @@
         android:layout_margin="20dp"
         android:text="注销"
         android:onClick="unregisterDevice"/>
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="重新绑定"
+        android:onClick="registDevice"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"

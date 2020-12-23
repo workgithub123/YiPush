@@ -28,6 +28,7 @@ public class YiPushManager {
     public static Context content;
     private static String TAG = "YiPush-Manager";
     private static String regId;
+
     public static boolean isDEBUG() {
         return DEBUG;
     }
@@ -42,16 +43,17 @@ public class YiPushManager {
         Logger.setDebug(YiPushManager.DEBUG);
     }
 
-    public static String getRegId(){
+    public static String getRegId() {
         return regId;
     }
+
     /**
      * 初始化
      * 放在Application 里
      *
-     * @param application                必须 Application
-     * @param appkey                     appkey
-     * @param appkey                     appsecret
+     * @param application               必须 Application
+     * @param appkey                    appkey
+     * @param appkey                    appsecret
      * @param yiPushReceiver            通知栏注册回调
      * @param yiPushPassThroughReceiver 穿透注册回调
      */
@@ -86,13 +88,13 @@ public class YiPushManager {
             public void callback(YiPushPlatform platform) {
                 if (platform != null) {
                     try {
-                        regId=platform.getRegId();
+                        regId = platform.getRegId();
                         Intent intent = new Intent();
                         intent.setAction("com.ly.yipush.testMsgBroadcastFilterRegist");
                         context.sendBroadcast(intent);
-                        String hd =  Looper.myLooper() != Looper.getMainLooper()?"子线程回调：":"主线程回调：";
-                        Logg.e(TAG,hd+ "RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
-                        net(platform.getRegId(),platform.getPlatformName());
+                        String hd = Looper.myLooper() != Looper.getMainLooper() ? "子线程回调：" : "主线程回调：";
+                        Logg.e(TAG, hd + "RegId=" + platform.getRegId() + " ; platformName=" + platform.getPlatformName());
+                        net(platform.getRegId(), platform.getPlatformName());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -103,7 +105,25 @@ public class YiPushManager {
         });
     }
 
-    /**动态注册
+    /**
+     * 配合动态注册
+     *
+     * @param application
+     * @param yiPushReceiver
+     * @param yiPushPassThroughReceiver
+     */
+    public static void init(Context application, YiPushReceiver yiPushReceiver
+            , YiPushPassThroughReceiver yiPushPassThroughReceiver) {
+        content = application;
+        YiPushClient.getInstance().setPushReceiver(yiPushReceiver);
+        YiPushClient.getInstance().setPassThroughReceiver(yiPushPassThroughReceiver);
+        getNoHttpHelper(application);
+    }
+
+    /**
+     * 动态注册(先init(Context application, YiPushReceiver yiPushReceiver
+     * , YiPushPassThroughReceiver yiPushPassThroughReceiver))
+     *
      * @param application
      * @param appkey
      * @param secret
@@ -112,23 +132,9 @@ public class YiPushManager {
         APPKEY = appkey;
         APP_SECRET = secret;
         content = application;
-        NoHttp.getInitializeConfig().getHeaders().add("x-app-key",  YiPushManager.APPKEY);
-        YiPushClient.getInstance().getRegisterId(application, new GetRegisterIdCallback() {
-            public void callback(YiPushPlatform platform) {
-                if (platform != null) {
-                    try {
-                        regId=platform.getRegId();
-                        Logg.e(TAG, Looper.myLooper() != Looper.getMainLooper()?"子线程回调：":"主线程回调："+
-                                "RegId="+platform.getRegId()+" ; platformName="+platform.getPlatformName());
-                        net(platform.getRegId(),platform.getPlatformName());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Logg.e(TAG, "platform of getRegisterId is null");
-                }
-            }
-        });
+        NoHttp.getInitializeConfig().getHeaders().add("x-app-key", YiPushManager.APPKEY);
+        YiPushClient.getInstance().register(application);
+        regist(application);
     }
 
 
@@ -141,6 +147,7 @@ public class YiPushManager {
 
     /**
      * 设备保活  建议每次APP启动时调用
+     *
      * @throws Exception
      */
     public static void imActive() throws Exception {
@@ -148,8 +155,8 @@ public class YiPushManager {
     }
 
 
-    private static void net(String rgid,String platform) throws Exception {
-        Presenter.registerDevice(rgid,platform);
+    private static void net(String rgid, String platform) throws Exception {
+        Presenter.registerDevice(rgid, platform);
     }
 
 

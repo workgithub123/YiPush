@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yipush.core.YiPushClient;
 import com.yipush.core.net.Presenter;
 import com.yipush.core.net.YiPushManager;
 
@@ -73,16 +74,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void unregisterDevice(View v) {
-
-        Intent intent = new Intent(this,SettingsActivity.class);
-        intent.setAction("");
-        startActivity(intent);
         try {
             YiPushManager.unregisterDevice();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        YiPushClient.getInstance().unregist(this);
+
+        rid.setText("");
     }
+
+    public void registDevice(View v) {
+
+        YiPushManager.regist(MyApplication.getInstance(),MyApplication.key,MyApplication.secret);
+
+    }
+
 
     public void imActive(View v) {
         try {

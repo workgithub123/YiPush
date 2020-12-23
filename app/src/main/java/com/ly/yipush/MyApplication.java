@@ -13,6 +13,8 @@ public class MyApplication extends Application {
 
     private static MyApplication instante;
 
+    public static final  String  key = "0823a2d92fef421db7559c2907089232";
+    public static final  String  secret = "5811426b33e84439b07a30a2dbec4418";
     public synchronized static MyApplication getInstance() {
 
         return instante;
@@ -23,8 +25,8 @@ public class MyApplication extends Application {
         instante = this;
         YiPushManager.setDEBUG(true);
         YiPushManager.init(this
-                ,"0823a2d92fef421db7559c2907089232"
-                ,"5811426b33e84439b07a30a2dbec4418"
+                ,key
+                ,secret
                 , new MyPushReceiver(),new MyPushPassThroughReceiver());
     }
 }
