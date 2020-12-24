@@ -25,11 +25,12 @@ public class Presenter {
 
 
     static {
-        if (BuildConfig.DEBUG) {
-            BASE_URL = BASE_URL_DEBUG;
-        } else {
-            BASE_URL = BASE_URL_RELEASE;
-        }
+//        if (BuildConfig.DEBUG) {
+//            BASE_URL = BASE_URL_DEBUG;
+//        } else {
+//            BASE_URL = BASE_URL_RELEASE;
+//        }
+        BASE_URL = BASE_URL_RELEASE;
     }
 
     static void registerDevice(String regId, String platform) throws Exception {
