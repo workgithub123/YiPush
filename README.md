@@ -49,6 +49,8 @@ allprojects {
 
 小米、VIVO和魅族需要在推送管理后台创建项目并且把对应的APP_ID和APP_KEY配置到文件中，OPPO比较特殊，是配置 APP_KEY 和 APP_SECRET。
 
+华为需要证书json文件
+
 apply plugin: 'com.huawei.agconnect'
 
  defaultConfig {
@@ -85,7 +87,7 @@ API介绍：
 
 #YiPushManager接口
 
-以下接口调用时，如有回调，均为异步执行，且回调不能为空。
+以下接口调用时，如有回调，均为异步执行。
 
 #SDK注册
 
@@ -93,9 +95,9 @@ API介绍：
 
  参数
 
- context应用上下文（必须ApplicationContext）
+ context应用上下文（必须ApplicationContext 否则会导致内存泄漏）
 
- appkey 
+ appkey
 
  appSecret
 
@@ -118,37 +120,39 @@ API介绍：
 
 3、获取唯一标识
 
- YiPushManager.getRegId() 需要在init成功后调用。
+ YiPushManager.getRegisterId() 需要在init成功后调用。
 
 4、设备注销
 
- YiPushManager.unregisterDevice()
+ YiPushManager.unRegister()推送服务器注销 regId还在 只是服务器不再推送该regId  需在init实例化注册成功后
+
+5、设备注册
+
+ YiPushManager.register() 对应unRegister 重新在推送服务器注册* 需在init实例化成功后
+
+
+6、设备和当前regId解开绑定  解绑后需要重新init注册 regId也会重新生成
+
+ YiPushManager.unBindDevice()
  
-5、设备保活
+7、设备保活
 
 YiPushManager.imActive()
 
-6、动态注册
-
-参数
-
-application （必须ApplicationContext）
-
-YiPushManager.regist(Context application, String appkey, String secret)
  
 厂商推送平台介绍
 
-推送平台	透传	全局推送	别名/标签	支持说明
+推送平台	  透传	    全局推送	  别名/标签	    支持说明
 
-小米推送	支持	 支持	     支持	      所有Android设备，小米设备支持系级别推送，其它设备支持普通推送
+小米推送	  支持	     支持	     支持	    所有Android设备，小米设备支持系级别推送，其它设备支持普通推送
 
-华为推送	支持	不支持	    不支持	     仅华为设备，部分EMUI4.0和4.1，及EMUI5.0及之后的华为设备。
+华为推送	  支持	    不支持	    不支持	    仅华为设备，部分EMUI4.0和4.1，及EMUI5.0及之后的华为设备。
 
-OPPO推送	不支持	 支持	     支持	       仅OPPO和一加手机，支持ColorOS3.1及以上的系统。
+OPPO推送	 不支持	     支持	     支持	    仅OPPO和一加手机，支持ColorOS3.1及以上的系统。
 
-VIVO推送	不支持	 支持	     支持	       仅VIVO手机，部分 Android 9.0，及 9.0 以上手机
+VIVO推送	 不支持	     支持	     支持	    仅VIVO手机，部分 Android 9.0，及 9.0 以上手机
 
-魅族推送   不支持	支持	    支持	      仅魅族手机，Flyme系统全平台
+魅族推送  不支持	     支持	     支持	    仅魅族手机，Flyme系统全平台
 
 
  
@@ -174,6 +178,8 @@ VIVO推送	不支持	 支持	     支持	       仅VIVO手机，部分 Android 9
 -keep class com.yipush.oppo.OppoPushProvider {*;}
 
 -keep class com.yipush.vivo.VivoPushProvider {*;}
+
+-keep class com.yipush.vivo.YiPushManager {*;}
 
  
 #华为推送
