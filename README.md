@@ -179,7 +179,7 @@ VIVO推送	 不支持	     支持	     支持	    仅VIVO手机，部分 Android
 
 -keep class com.yipush.vivo.VivoPushProvider {*;}
 
--keep class com.yipush.vivo.YiPushManager {*;}
+-keep class com.yipush.core.net.YiPushManager {*;}
 
  
 #华为推送

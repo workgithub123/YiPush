@@ -28,10 +28,10 @@ android {
     }
     signingConfigs {
         signConfig {
-//            storeFile file("../doc/sccsj.keystore")
-//            storePassword 'csj112233'
-//            keyAlias 'sccsj'
-//            keyPassword 'csj112233'
+            storeFile file("../doc/sccsj.keystore")
+            storePassword 'csj112233'
+            keyAlias 'sccsj'
+            keyPassword 'csj112233'
             v2SigningEnabled true//v2签名
         }
     }
@@ -49,8 +49,8 @@ android {
             shrinkResources false
             //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //签名
-            signingConfig signingConfigs.signConfig
+//            //签名
+//            signingConfig signingConfigs.signConfig
         }
     }
 

@@ -26,3 +26,48 @@
 -keep class com.yipush.huawei.HuaweiPushProvider {*;}
 -keep class com.yipush.oppo.OppoPushProvider {*;}
 -keep class com.yipush.vivo.VivoPushProvider {*;}
+
+-keep class com.yipush.mi.MiPushProvider {*;}
+
+-keep class com.yipush.meizu.MeizuPushProvider {*;}
+
+-keep class com.yipush.huawei.HuaweiPushProvider {*;}
+
+-keep class com.yipush.oppo.OppoPushProvider {*;}
+
+-keep class com.yipush.vivo.VivoPushProvider {*;}
+
+-keep class com.yipush.core.net.YiPushManager {*;}
+
+
+#华为推送
+
+-keep class com.hianalytics.android.**{*;}
+
+-keep class com.huawei.updatesdk.**{*;}
+
+-keep class com.huawei.hms.**{*;}
+
+#小米推送
+
+-keep class com.xiaomi.**{*;}
+
+
+#OPPO
+
+-keep public class * extends android.app.Service
+
+-keep class com.heytap.msp.** { *;}
+
+
+#VIVO
+
+-dontwarn com.vivo.push.**
+
+-keep class com.vivo.push.**{*; }
+
+-keep class com.vivo.vms.**{*; }
+
+#魅族
+
+-keep class com.meizu.**{*;}
