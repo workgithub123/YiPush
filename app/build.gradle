@@ -28,10 +28,10 @@ android {
     }
     signingConfigs {
         signConfig {
-            storeFile file("../doc/sccsj.keystore")
-            storePassword 'csj112233'
-            keyAlias 'sccsj'
-            keyPassword 'csj112233'
+//            storeFile file("../doc/sccsj.keystore")
+//            storePassword 'csj112233'
+//            keyAlias 'sccsj'
+//            keyPassword 'csj112233'
             v2SigningEnabled true//v2签名
         }
     }
