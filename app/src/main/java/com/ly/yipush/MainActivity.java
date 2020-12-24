@@ -1,6 +1,5 @@
 package com.ly.yipush;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,9 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.yipush.core.YiPushClient;
 import com.yipush.core.net.Presenter;
 import com.yipush.core.net.YiPushManager;
+
+import static com.ly.yipush.MyApplication.key;
+import static com.ly.yipush.MyApplication.secret;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
 //                ,"0823a2d92fef421db7559c2907089232"
 //                ,"5811426b33e84439b07a30a2dbec4418");
         rid = ((TextView) findViewById(R.id.rid));
-        rid .setText(YiPushManager.getRegId());
+        rid.setText(YiPushManager.getRegId());
         msg = ((TextView) findViewById(R.id.msg));
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.ly.yipush.testMsgBroadcastFilter");
         intentFilter2 = new IntentFilter();
-        intentFilter2.addAction("com.ly.yipush.testMsgBroadcastFilterRegist");
+        intentFilter2.addAction(YiPushManager.REGIST_INTENT);
         rec = new MyBroadcastReceiver();
         recr = new MyBroadcastReceiverR();
         registerReceiver(rec, intentFilter);
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (msg!=null) {
+            if (msg != null) {
                 msg.setText(intent.getStringExtra("data"));
             }
         }
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (rid!=null) {
+            if (rid != null) {
                 rid.setText(YiPushManager.getRegId());
             }
 
@@ -75,19 +79,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void unregisterDevice(View v) {
         try {
-            YiPushManager.unregisterDevice();
+            YiPushManager.unBindDevice(MyApplication.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        YiPushClient.getInstance().unregist(this);
-
-        rid.setText("");
     }
 
     public void registDevice(View v) {
-
-        YiPushManager.regist(MyApplication.getInstance(),MyApplication.key,MyApplication.secret);
-
+        try {
+            YiPushManager.init(this
+                    , key
+                    , secret
+                    , new MyPushReceiver(), new MyPushPassThroughReceiver());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

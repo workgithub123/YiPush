@@ -11,6 +11,7 @@ import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yipush.core.GetRegisterIdCallback;
 import com.yipush.core.YiPushClient;
+import com.yipush.core.YiPushMessage;
 import com.yipush.core.YiPushPassThroughReceiver;
 import com.yipush.core.YiPushPlatform;
 import com.yipush.core.YiPushReceiver;
@@ -28,6 +29,8 @@ public class YiPushManager {
     public static Context content;
     private static String TAG = "YiPush-Manager";
     private static String regId;
+    private static String platformName;
+    public static String REGIST_INTENT = "com.ly.yipush.testMsgBroadcastFilterRegist";
 
     public static boolean isDEBUG() {
         return DEBUG;
@@ -54,8 +57,8 @@ public class YiPushManager {
      * @param application               必须 Application
      * @param appkey                    appkey
      * @param appkey                    appsecret
-     * @param yiPushReceiver            通知栏注册回调
-     * @param yiPushPassThroughReceiver 穿透注册回调
+     * @param yiPushReceiver            通知栏注册回调 不能为null
+     * @param yiPushPassThroughReceiver 穿透注册回调 如果用不上穿透模式 可null
      */
     public static void init(Context application
             , String appkey, String secret, YiPushReceiver yiPushReceiver
@@ -63,14 +66,69 @@ public class YiPushManager {
         APPKEY = appkey;
         APP_SECRET = secret;
         content = application;
-        YiPushClient.getInstance().setPushReceiver(yiPushReceiver);
-        YiPushClient.getInstance().setPassThroughReceiver(yiPushPassThroughReceiver);
-        YiPushClient.getInstance().register(application);
         getNoHttpHelper(application);
-        regist(application);
+        regist(application, yiPushReceiver, yiPushPassThroughReceiver);
+
     }
 
-    public static synchronized NoHttpHelper getNoHttpHelper(Context context) {
+    private static void regist(Context application, YiPushReceiver yiPushReceiver, YiPushPassThroughReceiver yiPushPassThroughReceiver) {
+        YiPushClient.getInstance().setPushReceiver(new YiPushReceiver() {
+            @Override
+            public void onRegisterSucceed(Context context, YiPushPlatform platform) {
+                if (platform != null) {
+                    try {
+                        regId = platform.getRegId();
+                        platformName = platform.getPlatformName();
+                        Intent intent = new Intent();
+                        intent.setAction(REGIST_INTENT);
+                        context.sendBroadcast(intent);
+                        String hd = Looper.myLooper() != Looper.getMainLooper() ? "子线程回调：" : "主线程回调：";
+                        Logg.e(TAG, hd + "RegId=" + platform.getRegId() + " ; platformName=" + platform.getPlatformName());
+                        register(regId, platformName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Logg.e(TAG, "platform of getRegisterId is null");
+                }
+                yiPushReceiver.onRegisterSucceed(context, platform);
+            }
+
+            @Override
+            public void onNotificationMessageClicked(Context context, YiPushMessage message) {
+                yiPushReceiver.onNotificationMessageClicked(context, message);
+            }
+
+            @Override
+            public void onNotificationMessageArrived(Context context, YiPushMessage message) {
+                super.onNotificationMessageArrived(context, message);
+                yiPushReceiver.onNotificationMessageArrived(context, message);
+            }
+
+            @Override
+            public void openAppCallback(Context context) {
+                super.openAppCallback(context);
+                yiPushReceiver.openAppCallback(context);
+            }
+        });
+        YiPushClient.getInstance().setPassThroughReceiver(new YiPushPassThroughReceiver() {
+            @Override
+            public void onRegisterSucceed(Context context, YiPushPlatform platform) {
+                if (yiPushPassThroughReceiver != null)
+                    yiPushPassThroughReceiver.onRegisterSucceed(context, platform);
+            }
+
+            @Override
+            public void onReceiveMessage(Context context, YiPushMessage message) {
+                if (yiPushPassThroughReceiver != null)
+                    yiPushPassThroughReceiver.onReceiveMessage(context, message);
+            }
+
+        });
+        YiPushClient.getInstance().register(application);
+    }
+
+    private static synchronized NoHttpHelper getNoHttpHelper(Context context) {
         if (noHttpHelper == null) {
             noHttpHelper = new NoHttpHelper(context);
         }
@@ -78,71 +136,47 @@ public class YiPushManager {
     }
 
     /**
-     * 推送注册
-     * 可用于重注册（init时已经调用）
+     * 获取regId，建议在首页的onCreate调用 需要在init成功后
+     * 子线程回调
      *
      * @param context
+     * @return
      */
-    private static void regist(Context context) {
-        YiPushClient.getInstance().getRegisterId(context, new GetRegisterIdCallback() {
-            public void callback(YiPushPlatform platform) {
-                if (platform != null) {
-                    try {
-                        regId = platform.getRegId();
-                        Intent intent = new Intent();
-                        intent.setAction("com.ly.yipush.testMsgBroadcastFilterRegist");
-                        context.sendBroadcast(intent);
-                        String hd = Looper.myLooper() != Looper.getMainLooper() ? "子线程回调：" : "主线程回调：";
-                        Logg.e(TAG, hd + "RegId=" + platform.getRegId() + " ; platformName=" + platform.getPlatformName());
-                        net(platform.getRegId(), platform.getPlatformName());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Logg.e(TAG, "platform of getRegisterId is null");
-                }
-            }
-        });
-    }
-
-    /**
-     * 配合动态注册
-     *
-     * @param application
-     * @param yiPushReceiver
-     * @param yiPushPassThroughReceiver
-     */
-    public static void init(Context application, YiPushReceiver yiPushReceiver
-            , YiPushPassThroughReceiver yiPushPassThroughReceiver) {
-        content = application;
-        YiPushClient.getInstance().setPushReceiver(yiPushReceiver);
-        YiPushClient.getInstance().setPassThroughReceiver(yiPushPassThroughReceiver);
-        getNoHttpHelper(application);
-    }
-
-    /**
-     * 动态注册(先init(Context application, YiPushReceiver yiPushReceiver
-     * , YiPushPassThroughReceiver yiPushPassThroughReceiver))
-     *
-     * @param application
-     * @param appkey
-     * @param secret
-     */
-    public static void regist(Context application, String appkey, String secret) {
-        APPKEY = appkey;
-        APP_SECRET = secret;
-        content = application;
-        NoHttp.getInitializeConfig().getHeaders().add("x-app-key", YiPushManager.APPKEY);
-        YiPushClient.getInstance().register(application);
-        regist(application);
+    public static void getRegisterId(Context context, GetRegisterIdCallback registerIdCallback) {
+        YiPushClient.getInstance().getRegisterId(context, registerIdCallback);
     }
 
 
     /**
-     * 设备注销
+     * 推送服务器注销 regId还在 只是服务器不在推送该regId
+     * * 需在init实例化注册成功后
      */
-    public static void unregisterDevice() throws Exception {
+    public static void unRegister() throws Exception {
         Presenter.unregisterDevice(MyShared.getString(MyShared.TOKEN_YIPUSH, ""));
+    }
+
+    /**
+     * 对应unRegister 重新在推送服务器注册
+     * 需在init实例化成功后
+     *
+     * @throws Exception
+     */
+    public static void register() throws Exception {
+        register(regId, platformName);
+    }
+
+    /**
+     * 设备和当前regId解开绑定  解绑后需要重新init注册 regId也会重新生成
+     *
+     * @throws Exception
+     */
+    public static void unBindDevice(Context content) {
+        YiPushClient.getInstance().unregist(content);
+        try {
+            unRegister();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -155,7 +189,7 @@ public class YiPushManager {
     }
 
 
-    private static void net(String rgid, String platform) throws Exception {
+    private static void register(String rgid, String platform) throws Exception {
         Presenter.registerDevice(rgid, platform);
     }
 

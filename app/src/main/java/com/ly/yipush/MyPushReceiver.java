@@ -21,7 +21,6 @@ public class MyPushReceiver extends YiPushReceiver {
     @Override
     public void onRegisterSucceed(Context context, YiPushPlatform yiPushPlatform) {
         Logg.e("MyPushReceiver","onRegisterSucceed");
-
     }
     /**
      * 通知栏消息被点击回调
