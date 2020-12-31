@@ -67,11 +67,11 @@ public class YiPushManager {
         APP_SECRET = secret;
         content = application;
         getNoHttpHelper(application);
-        regist(application, yiPushReceiver, yiPushPassThroughReceiver);
+        regist(application,application.getPackageName(), yiPushReceiver, yiPushPassThroughReceiver);
 
     }
 
-    private static void regist(Context application, YiPushReceiver yiPushReceiver, YiPushPassThroughReceiver yiPushPassThroughReceiver) {
+    private static void regist(Context application,String packegeName, YiPushReceiver yiPushReceiver, YiPushPassThroughReceiver yiPushPassThroughReceiver) {
         YiPushClient.getInstance().setPushReceiver(new YiPushReceiver() {
             @Override
             public void onRegisterSucceed(Context context, YiPushPlatform platform) {
@@ -84,7 +84,7 @@ public class YiPushManager {
                         context.sendBroadcast(intent);
                         String hd = Looper.myLooper() != Looper.getMainLooper() ? "子线程回调：" : "主线程回调：";
                         Logg.e(TAG, hd + "RegId=" + platform.getRegId() + " ; platformName=" + platform.getPlatformName());
-                        register(regId, platformName);
+                        register(regId, platformName,packegeName);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -162,7 +162,7 @@ public class YiPushManager {
      * @throws Exception
      */
     public static void register() throws Exception {
-        register(regId, platformName);
+        register(regId, platformName,content.getPackageName());
     }
 
     /**
@@ -189,8 +189,8 @@ public class YiPushManager {
     }
 
 
-    private static void register(String rgid, String platform) throws Exception {
-        Presenter.registerDevice(rgid, platform);
+    private static void register(String rgid, String platform,String packegeName) throws Exception {
+        Presenter.registerDevice(rgid, platform,packegeName);
     }
 
 

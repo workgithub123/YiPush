@@ -11,8 +11,8 @@ android {
         applicationId "com.scqjmagic.yipush"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 12
-        versionName "1.0.0.7"
+        versionCode 13
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -26,15 +26,7 @@ android {
         manifestPlaceholders["MEIZU_APP_ID"] = "137489"
         manifestPlaceholders["MEIZU_APP_KEY"] = "c3ba44b8662d4c65ae044c3b9997fe9d"
     }
-    signingConfigs {
-        signConfig {
-            storeFile file("../doc/sccsj.keystore")
-            storePassword 'csj112233'
-            keyAlias 'sccsj'
-            keyPassword 'csj112233'
-            v2SigningEnabled true//v2签名
-        }
-    }
+
     buildTypes {
         release {
             minifyEnabled false

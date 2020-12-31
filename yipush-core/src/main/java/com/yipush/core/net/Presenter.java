@@ -33,10 +33,11 @@ public class Presenter {
         BASE_URL = BASE_URL_RELEASE;
     }
 
-    static void registerDevice(String regId, String platform) throws Exception {
+    static void registerDevice(String regId, String platform,String packageName) throws Exception {
         Map<String, String> map = new ArrayMap<>();
         map.put("regId", regId);
         map.put("platform", platform);
+        map.put("bundle", packageName);
         map.put("nonceStr", SignUtil.generateNonceStr());
         String jsonReq = SignUtil.generateSignedJson(map, YiPushManager.APP_SECRET);
         NohttpRequest.urlPost(1, BASE_URL + registerDevice, jsonReq, false, ""

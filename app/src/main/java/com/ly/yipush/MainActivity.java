@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.yipush.core.YiPushClient;
 import com.yipush.core.net.Presenter;
 import com.yipush.core.net.YiPushManager;
 
@@ -21,11 +20,9 @@ import static com.ly.yipush.MyApplication.secret;
 public class MainActivity extends AppCompatActivity {
 
     private MyBroadcastReceiver rec;
-    private IntentFilter intentFilter;
     private TextView msg;
     private TextView rid;
     private MyBroadcastReceiverR recr;
-    private IntentFilter intentFilter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         rid = ((TextView) findViewById(R.id.rid));
         rid.setText(YiPushManager.getRegId());
         msg = ((TextView) findViewById(R.id.msg));
-        intentFilter = new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ly.yipush.testMsgBroadcastFilter");
-        intentFilter2 = new IntentFilter();
+        IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction(YiPushManager.REGIST_INTENT);
         rec = new MyBroadcastReceiver();
         recr = new MyBroadcastReceiverR();
